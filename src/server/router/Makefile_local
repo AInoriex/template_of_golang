@@ -1,0 +1,6 @@
+APP        := translate
+TARGET     := router
+#GOPATH ?= $(shell pwd)/../../../pkg:$(shell pwd)/../../../vendor
+#GOPATH=$(shell pwd)/../../../:$(shell pwd)/vendor:
+ROOTPATH := $(shell pwd)/../../../
+include $(shell pwd)/../../../makefile_local.taf
