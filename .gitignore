@@ -1,0 +1,11 @@
+/bin
+/log
+/log/.log
+/input
+/result
+/result/audio
+/reuslt/video
+/.idea
+*.sh
+.vscode
+vendor
