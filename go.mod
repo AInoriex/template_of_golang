@@ -3,8 +3,10 @@ module singapore
 go 1.19
 
 require (
+	gitee.com/slopy/tools/log v0.0.0-20231219024711-51b8c181e86d
 	github.com/TarsCloud/TarsGo v1.4.0
 	github.com/gin-gonic/gin v1.10.0
+	github.com/huaweicloud/huaweicloud-sdk-go-obs v3.24.3+incompatible
 	github.com/tencentyun/cos-go-sdk-v5 v0.7.52
 	go.uber.org/zap v1.27.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1

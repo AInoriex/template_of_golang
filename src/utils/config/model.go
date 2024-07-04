@@ -36,6 +36,7 @@ type CommonConf struct {
 	OpenDbLog           bool                 `json:"open_db_log"`
 	TencentOSS          *TencentOSS          `json:"tencent_oss"`
 	TencentOSSX         *TencentOSS          `json:"tencent_oss_x"`
+	HuaweiOBS           *HuaweiOBS           `json:"huawei_obs"`
 	BylinkConf          *BylinkConf          `json:"bylink_conf"`
 	BylinkMaigcConf     *BylinkConf          `json:"bylink_magic_conf"`
 	ApiHost             string               `json:"api_host"` // api域名
@@ -89,12 +90,23 @@ type UploadConfig struct {
 	UploadDir string `json:"upload_dir"`
 }
 
+// 腾讯云Cos
 type TencentOSS struct {
 	Url       string `json:"url"`
 	SecretId  string `json:"secret_id"`
 	SecretKey string `json:"secret_key"`
 	Env       string `json:"env"`
 	Cdn       string `json:"cdn"`
+}
+
+// 华为Obs
+type HuaweiOBS struct {
+	Url       string `json:"url"`
+	SecretId  string `json:"secret_id"`
+	SecretKey string `json:"secret_key"`
+	Env       string `json:"env"`
+	Cdn       string `json:"cdn"`
+	Bucket    string `json:"bucket"`
 }
 
 // 百灵埋点系统

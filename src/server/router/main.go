@@ -8,6 +8,7 @@ import (
 	"singapore/src/utils/config"
 	"singapore/src/utils/cos"
 	"singapore/src/utils/log"
+	"singapore/src/utils/obs"
 	"singapore/src/utils/rpc"
 )
 
@@ -19,22 +20,25 @@ func main() {
 	defer func() {
 		handler.Alarm2LarkLocal(alarm.LarkServerAlarmTextVariable{
 			Level:  "WARN",
-			Msg:    "[!] `singapore` Service is DOWN",
+			Msg:    "[!] Service is DOWN",
 			Detail: "Please check the log.",
 		})
-		log.Info("[main.go] Exit.")
+		log.Info("[MAIN] Exit.")
 	}()
 
 }
 
 // 本地服务
 func main_local() {
-	config.InitCommonConfigLocal("F:\\X-project\\sub_service\\singapore_download_service\\conf\\local\\common.json")
+	config.InitCommonConfigLocal("./conf/local/common.json")
 	log.InitLogger(config.CommonCfg.Log.SavePath, true)
 	log.Info("初始化Config完毕")
 
-	cos.InitCos(config.CommonCfg.TencentOSS)
-	log.Info("初始化腾讯云Cos完毕")
+	// cos.InitCos(config.CommonCfg.TencentOSS)
+	// log.Info("初始化腾讯云Cos完毕")
+
+	// obs.InitObs(config.CommonCfg.HuaweiOBS)
+	// log.Info("初始化华为云Obs完毕")
 
 	// db.InitMysqlAllLocal("root:123456@tcp(127.0.0.1:3306)", "meta", 5, db.Con_Main, true)
 	// db.InitMysqlAll(config.DbCfg.Mysql.Host, config.DbCfg.Mysql.Db, config.DbCfg.Mysql.MaxCon, db.Con_Main, config.CommonCfg.OpenDbLog)
@@ -59,6 +63,9 @@ func main_tars() {
 
 	cos.InitCos(config.CommonCfg.TencentOSS)
 	log.Info("初始化腾讯云Cos完毕")
+
+	obs.InitObs(config.CommonCfg.HuaweiOBS)
+	log.Info("初始化华为云Obs完毕")
 
 	// db.InitMysqlAllLocal("root:123456@tcp(127.0.0.1:3306)", "meta", 5, db.Con_Main, true)
 	// db.InitMysqlAll(config.DbCfg.Mysql.Host, config.DbCfg.Mysql.Db, config.DbCfg.Mysql.MaxCon, db.Con_Main, config.CommonCfg.OpenDbLog)
