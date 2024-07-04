@@ -6,6 +6,7 @@
 /result/audio
 /reuslt/video
 /.idea
+/conf
 *.sh
 .vscode
 vendor
