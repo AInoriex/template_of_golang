@@ -30,7 +30,7 @@ const (
 	ErrCodeImageFilterResponseError = 30108
 	ErrCodeTargetVersionTooLow      = 30109
 	ErrCodeWaitAMoment              = 30110
-	ErrCodeAINotFace                = 30111
+	ErrCodeRelogin                  = 30111
 	ErrCodeUploadFileTooLarge       = 30112
 	ErrCodeUploadFileEmpty          = 30113
 	ErrCodeUploadFileFail           = 30114
@@ -55,7 +55,7 @@ var (
 	ErrJsonMarshal          = New("", "JsonMarshal err", ErrCodeJsonMarshal)
 	ErrRedisLockTimeOut     = New("", "系统繁忙", ErrCodeRedisLockTimeOut) //redis锁超时错误用替代
 	ErrTargetVersionTooLow  = New("", "对方版本过低，暂不支持此功能", ErrCodeTargetVersionTooLow)
-	ErrAINotFace            = New("", "未检测到人脸", ErrCodeAINotFace)
+	ErrRelogin              = New("", "重新登录", ErrCodeRelogin)
 	ErrUploadFileTooLarge   = New("", "上传文件太大", ErrCodeUploadFileTooLarge)
 	ErrUploadFileEmpty      = New("", "上传文件不存在", ErrCodeUploadFileEmpty)
 	ErrUploadFileFail       = New("", "上传文件失败", ErrCodeUploadFileFail)

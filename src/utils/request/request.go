@@ -2,7 +2,6 @@ package request
 
 import (
 	"bytes"
-	"singapore/src/utils/log"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -12,6 +11,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"net/url"
+	"singapore/src/utils/log"
 	"strings"
 )
 
@@ -55,14 +55,14 @@ const (
 )
 
 const (
-	RequestContentTypeForFormData           string = "application/form-data"
-	RequestContentTypeForXWWWFormUrlencoded string = "application/x-www-form-urlencoded"
-	RequestContentTypeForJson               string = "application/json"
-	RequestContentTypeForMultipartFormData  string = "multipart/form-data"
+	HeaderContentTypeForFormData           string = "application/form-data"
+	HeaderContentTypeForXWWWFormUrlencoded string = "application/x-www-form-urlencoded"
+	HeaderContentTypeForJson               string = "application/json"
+	HeaderContentTypeForMultipartFormData  string = "multipart/form-data"
 )
 
 // Request 发起请求
-func (c *Client) Request(format RequestBodyFormat, http_proxy string, headers ...Headers) ([]byte, error) {
+func (c *Client) Request(format RequestBodyFormat, http_proxy string, headers Headers) ([]byte, error) {
 	client := new(http.Client)
 
 	// http client设置代理
@@ -125,7 +125,7 @@ func (c *Client) Request(format RequestBodyFormat, http_proxy string, headers ..
 			reqBody = bytes.NewReader(body.Bytes())
 
 			// 获取Headers 数据内容类型，需要boundary=<calculated when request is sent>信息
-			headers[0].ContentType = writer.FormDataContentType()
+			headers.ContentType = writer.FormDataContentType()
 		}
 	}
 	req, err := http.NewRequest(string(c.Method), c.Url, reqBody)
@@ -133,24 +133,25 @@ func (c *Client) Request(format RequestBodyFormat, http_proxy string, headers ..
 		log.Error("Request http.NewRequest error", zap.Error(err))
 		return nil, err
 	}
-	for _, v := range headers {
-		if v.UserAgent != "" {
-			req.Header.Add("User-Agent", v.UserAgent)
-		}
-		if v.ContentType != "" && req.Header.Get("Content-Type") == "" {
-			req.Header.Add("Content-Type", v.ContentType)
-		}
-		if len(v.Cookies) > 0 {
-			for key, val := range v.Cookies {
-				req.AddCookie(&http.Cookie{Name: key, Value: val})
-			}
-		}
-		if len(v.Others) > 0 {
-			for key, val := range v.Others {
-				req.Header.Add(key, val)
-			}
+
+	// 请求头封装
+	if headers.UserAgent != "" {
+		req.Header.Add("User-Agent", headers.UserAgent)
+	}
+	if headers.ContentType != "" && req.Header.Get("Content-Type") == "" {
+		req.Header.Add("Content-Type", headers.ContentType)
+	}
+	if len(headers.Cookies) > 0 {
+		for key, val := range headers.Cookies {
+			req.AddCookie(&http.Cookie{Name: key, Value: val})
 		}
 	}
+	if len(headers.Others) > 0 {
+		for key, val := range headers.Others {
+			req.Header.Add(key, val)
+		}
+	}
+
 	resp := new(http.Response)
 
 	log.Debug("[Request Detail]", zap.Any("URL", req.URL), zap.Any("Header", req.Header), zap.Any("reqBody", reqBody), zap.Any("Body", req.Body))

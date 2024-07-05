@@ -1,12 +1,12 @@
 package common
 
 import (
-	"singapore/src/utils/log"
 	"encoding/base64"
 	"errors"
 	"go.uber.org/zap"
 	"io/ioutil"
 	"os"
+	"singapore/src/utils/log"
 	"sort"
 	"strconv"
 	"strings"
@@ -97,9 +97,10 @@ func SaveFileByBase64(imageBase64 string, basePath string, fileName string) erro
 	return err
 }
 
-func CheckSavePath(dst string) bool {
+// 检查本地文件是否存在
+func CheckFileExist(dst string) bool {
 	_, err := os.Stat(dst)
-	return os.IsNotExist(err)
+	return os.IsExist(err)
 }
 
 // 从test.txt中读取base64字符串，解码，然后生成文件

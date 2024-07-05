@@ -54,12 +54,12 @@ func GetContextData(ctx context.Context) (data *ContextData, err error) {
 
 	if data.AppId <= 0 {
 		log.Error("rpc.GetContextData appid is empty", zap.Any("reqContext", reqContext))
-		return data, errors.ErrorRelogin
+		return data, errors.ErrRelogin
 	}
 
 	if data.RoomId == "" {
 		log.Error("rpc.GetContextData RoomId is empty", zap.Any("reqContext", reqContext))
-		return data, errors.ErrorRelogin
+		return data, errors.ErrRelogin
 	}
 
 	return
